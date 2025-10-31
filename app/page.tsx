@@ -3,7 +3,37 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight, Check, X, Zap, Clock, Heart, TrendingUp, Shield, Users, Star, Phone, Calculator, Calendar, ChevronDown, AlertCircle, DollarSign, Target, Award, BarChart3, MessageSquare, CheckCircle2 } from 'lucide-react';
 import DemoModal from '@/components/DemoModal';
+import PhoneSimulator from '@/components/PhoneSimulator';
+import TimelineProgress from '@/components/TimelineProgress';
+import LiveCounter from '@/components/LiveCounter';
+import VideoTestimonial from '@/components/VideoTestimonial';
+import LiveStats from '@/components/LiveStats';
 import { useInView, useScrollProgress, useCounter, useParallax } from '@/hooks/useAdvancedAnimations';
+
+// Fonction pour personnaliser le texte selon l'heure
+function getTimeBasedCopy() {
+  const hour = new Date().getHours();
+
+  if (hour >= 6 && hour < 10) {
+    return {
+      timing: "en ce moment même",
+      tense: "est peut-être en train de vous arriver",
+      action: "Arrêtez ce cycle dès maintenant"
+    };
+  } else if (hour >= 10 && hour < 14) {
+    return {
+      timing: "ce matin",
+      tense: "vous est arrivé",
+      action: "Ne revivez plus jamais ça"
+    };
+  } else {
+    return {
+      timing: "demain matin",
+      tense: "vous arrivera",
+      action: "Commencez dès aujourd'hui pour demain"
+    };
+  }
+}
 
 // Composant d'animation réutilisable
 function FadeIn({ children, delay = 0, direction = 'up' }: {
@@ -248,7 +278,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Le problème - DESIGN PREMIUM avec messages WhatsApp */}
+      {/* Le problème - INTERACTIVE PERFECTION */}
       <section className="section-padding bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 opacity-30">
@@ -257,94 +287,139 @@ export default function Home() {
           <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{animationDelay: '4s'}}></div>
         </div>
 
-        <div className="container-custom max-w-5xl relative z-10">
+        <div className="container-custom max-w-6xl relative z-10">
+          {/* Time-based personalized header */}
           <FadeIn>
-            <div className="text-center mb-20">
+            <div className="text-center mb-12">
               <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Vous reconnaissez ?
               </h2>
               <p className="text-2xl md:text-3xl text-gray-600">
                 C'est votre journée. <span className="text-red-600 font-bold">Tous les jours.</span>
               </p>
+              <p className="text-xl text-gray-500 mt-4 animate-pulse">
+                {getTimeBasedCopy().timing}, ça {getTimeBasedCopy().tense}
+              </p>
             </div>
           </FadeIn>
 
-          {/* 6h00 - Premier message avec design premium */}
-          <FadeIn delay={100} direction="left">
-            <div className="mb-20">
-              {/* Time header avec effet glassmorphism */}
-              <div className="flex items-center gap-4 mb-8 bg-white/60 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-gray-200/50">
-                <div className="relative">
-                  <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-2xl animate-pulse">
-                    <Clock className="w-10 h-10 text-white drop-shadow-lg" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></div>
+          {/* Timeline Progress - sticky at top */}
+          <TimelineProgress
+            steps={[
+              {
+                time: "6h00",
+                title: "Premier message",
+                icon: <Clock className="w-4 h-4" />,
+                color: "from-red-500 to-red-700",
+                description: "Vous pétrissez tranquillement. Votre téléphone vibre. Ça commence..."
+              },
+              {
+                time: "7h30",
+                title: "Déluge de messages",
+                icon: <MessageSquare className="w-4 h-4" />,
+                color: "from-orange-500 to-red-600",
+                description: "15 messages en 30 minutes. Impossible de vous concentrer. Le stress monte."
+              },
+              {
+                time: "9h00",
+                title: "L'erreur fatale",
+                icon: <Phone className="w-4 h-4" />,
+                color: "from-red-600 to-red-800",
+                description: "Un client appelle. Erreur de commande. 40€ perdus. Client mécontent."
+              }
+            ]}
+            onStepReached={(index) => {
+              // Track progress for analytics
+              console.log('Timeline step reached:', index);
+            }}
+          />
+
+          {/* Main interactive section with Phone Simulator + Live Counter */}
+          <div className="grid md:grid-cols-2 gap-12 mb-20 mt-12">
+            {/* Left: Phone Simulator with live messages */}
+            <FadeIn delay={100} direction="left">
+              <div>
+                <div className="mb-6 text-center md:text-left">
+                  <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                    Votre téléphone ce matin
+                  </h3>
+                  <p className="text-lg text-gray-600">
+                    Regardez les messages arriver en temps réel...
+                  </p>
                 </div>
-                <div className="flex-1">
-                  <div className="text-4xl font-bold text-gray-900 mb-1 tracking-tight">6h00 du matin</div>
-                  <div className="text-xl text-gray-600">Vous pétrissez. Les mains dans la pâte.</div>
-                </div>
+                <PhoneSimulator
+                  messages={[
+                    {
+                      id: 1,
+                      name: "Hôtel du Parc",
+                      message: "Bonjour ! Pour demain : 20 baguettes, 15 croissants, 10 pains au chocolat. Livraison 7h ?",
+                      time: "6:02",
+                      color: "from-green-400 to-green-600",
+                      position: 'left' as const
+                    },
+                    {
+                      id: 2,
+                      name: "Restaurant La Table",
+                      message: "Coucou ! Comme d'habitude + 5 baguettes supplémentaires 😊",
+                      time: "7:12",
+                      color: "from-blue-400 to-blue-600",
+                      position: 'right' as const
+                    },
+                    {
+                      id: 3,
+                      name: "Café du Coin",
+                      message: "Dispo pour 30 croissants demain ?",
+                      time: "7:18",
+                      color: "from-purple-400 to-purple-600",
+                      position: 'left' as const
+                    },
+                    {
+                      id: 4,
+                      name: "Brasserie du Port",
+                      message: "C'était quoi déjà ma commande habituelle ? 🤔",
+                      time: "7:24",
+                      color: "from-orange-400 to-orange-600",
+                      position: 'right' as const
+                    },
+                    {
+                      id: 5,
+                      name: "Hôtel Belle Vue",
+                      message: "URGENT besoin de 40 viennoiseries en plus !!!",
+                      time: "7:31",
+                      color: "from-red-400 to-red-600",
+                      position: 'left' as const
+                    }
+                  ]}
+                  onComplete={() => {
+                    console.log('All messages displayed');
+                  }}
+                />
               </div>
+            </FadeIn>
 
-              {/* Message WhatsApp style iOS premium */}
-              <FadeIn delay={200}>
-                <div className="max-w-lg mb-8 transform hover:scale-105 transition-all duration-300">
-                  <div className="relative group">
-                    {/* Glow effect on hover */}
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-3xl opacity-0 group-hover:opacity-20 blur transition-all duration-300"></div>
+            {/* Right: Action list + Live Counter */}
+            <FadeIn delay={200} direction="right">
+              <div className="space-y-8">
+                {/* Live Counter showing time passing */}
+                <LiveCounter
+                  targetMinutes={8}
+                  label="Temps perdu par commande"
+                  onComplete={() => {
+                    console.log('Counter completed');
+                  }}
+                />
 
-                    <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl rounded-tl-sm p-6 shadow-2xl border border-gray-200/50">
-                      {/* Avatar et header */}
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-green-100">
-                          H
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-bold text-gray-900 text-lg">Hôtel du Parc</div>
-                          <div className="text-xs text-gray-500 flex items-center gap-1">
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                            En ligne
-                          </div>
-                        </div>
-                        <div className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">6:02</div>
-                      </div>
-
-                      {/* Message content avec meilleure typo */}
-                      <div className="bg-white/80 rounded-2xl p-4 shadow-inner">
-                        <p className="text-lg text-gray-900 leading-relaxed space-y-2">
-                          <span className="block">Bonjour ! Pour demain matin :</span>
-                          <span className="block font-semibold text-gray-900">• 20 baguettes</span>
-                          <span className="block font-semibold text-gray-900">• 15 croissants</span>
-                          <span className="block font-semibold text-gray-900">• 10 pains au chocolat</span>
-                          <span className="block mt-3">Livraison à 7h comme d'hab ?</span>
-                          <span className="block">Merci ! 😊</span>
-                        </p>
-                      </div>
-
-                      {/* Typing indicator subtle */}
-                      <div className="flex gap-1 mt-3 ml-4">
-                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-
-              {/* Ce que vous devez faire - design amélioré */}
-              <FadeIn delay={300}>
+                {/* Action list */}
                 <div className="relative group">
-                  {/* Glow effect */}
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-red-400 to-pink-500 rounded-3xl opacity-20 group-hover:opacity-30 blur-xl transition-all duration-500"></div>
 
-                  <div className="relative bg-gradient-to-br from-red-50 via-white to-red-50 rounded-3xl p-10 shadow-2xl border border-red-200/50">
+                  <div className="relative bg-gradient-to-br from-red-50 via-white to-red-50 rounded-3xl p-8 shadow-2xl border border-red-200/50">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="text-4xl">⏱️</div>
+                      <div className="text-4xl animate-pulse">⏱️</div>
                       <div className="text-2xl font-bold text-gray-900">Ce que vous devez faire :</div>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {[
                         {text: "Vous laver les mains", emoji: "🧼"},
                         {text: "Prendre le téléphone", emoji: "📱"},
@@ -357,155 +432,68 @@ export default function Home() {
                         {text: "L'imprimer", emoji: "🖨️"},
                         {text: "Retourner pétrir", emoji: "🥖"}
                       ].map((action, i) => (
-                        <FadeIn key={i} delay={350 + i * 40}>
-                          <div className="flex items-center gap-4 bg-white/80 backdrop-blur rounded-2xl p-4 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
-                            <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg shrink-0">
+                        <FadeIn key={i} delay={250 + i * 30}>
+                          <div className="flex items-center gap-3 bg-white/80 backdrop-blur rounded-xl p-3 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                            <div className="w-7 h-7 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-lg shrink-0">
                               {i + 1}
                             </div>
-                            <span className="text-lg font-medium text-gray-800">{action.text}</span>
-                            <span className="text-2xl ml-auto">{action.emoji}</span>
+                            <span className="text-base font-medium text-gray-800 flex-1">{action.text}</span>
+                            <span className="text-xl">{action.emoji}</span>
                           </div>
                         </FadeIn>
                       ))}
                     </div>
 
-                    {/* Big impact card */}
-                    <div className="mt-8 bg-gradient-to-br from-red-600 to-red-700 text-white p-8 rounded-3xl text-center shadow-2xl transform hover:scale-105 transition-all duration-300">
-                      <div className="text-5xl font-black mb-2 drop-shadow-lg animate-pulse">
-                        8 minutes perdues
+                    {/* Multiplier effect */}
+                    <div className="mt-6 bg-gradient-to-br from-red-600 to-red-700 text-white p-6 rounded-2xl text-center shadow-xl">
+                      <div className="text-3xl font-black mb-1 drop-shadow-lg">
+                        × 15 commandes par jour
                       </div>
-                      <div className="text-xl text-red-100">Et c'est juste la première commande...</div>
+                      <div className="text-base text-red-100">= 2 heures de stress quotidien</div>
                     </div>
                   </div>
                 </div>
-              </FadeIn>
-            </div>
-          </FadeIn>
+              </div>
+            </FadeIn>
+          </div>
 
-          {/* 7h30 - Déluge de messages avec design premium */}
-          <FadeIn delay={100} direction="right">
+          {/* Video Testimonial Section */}
+          <FadeIn delay={300}>
             <div className="mb-20">
-              {/* Time header */}
-              <div className="flex items-center gap-4 mb-10 bg-white/60 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-gray-200/50">
-                <div className="relative">
-                  <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-2xl">
-                    <MessageSquare className="w-10 h-10 text-white drop-shadow-lg animate-pulse" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-bounce shadow-lg">
-                    15
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="text-4xl font-bold text-gray-900 mb-1 tracking-tight">7h30</div>
-                  <div className="text-xl text-gray-600">Votre téléphone n'arrête plus.</div>
-                </div>
+              <div className="text-center mb-10">
+                <h3 className="text-4xl font-bold text-gray-900 mb-4">
+                  Marie a vécu la même chose
+                </h3>
+                <p className="text-xl text-gray-600">
+                  Voici comment elle a repris le contrôle en 24h
+                </p>
               </div>
-
-              {/* Cascade de messages redesignée */}
-              <div className="space-y-5 mb-10">
-                {[
-                  {name: "Restaurant La Table", time: "7:12", message: "Coucou ! Comme d'habitude + 5 baguettes 😊", color: "from-blue-400 to-blue-600", position: "left"},
-                  {name: "Café du Coin", time: "7:18", message: "Dispo pour 30 croissants demain ?", color: "from-purple-400 to-purple-600", position: "right"},
-                  {name: "Brasserie du Port", time: "7:24", message: "C'était quoi déjà ma commande habituelle ? 🤔", color: "from-orange-400 to-orange-600", position: "left"},
-                  {name: "Hôtel Belle Vue", time: "7:31", message: "URGENT besoin de 40 viennoiseries en plus !!!", color: "from-red-400 to-red-600", position: "right"}
-                ].map((msg, i) => (
-                  <FadeIn key={i} delay={150 + i * 80}>
-                    <div className={`max-w-md ${msg.position === 'right' ? 'ml-auto' : ''} transform hover:scale-105 transition-all duration-300`}>
-                      <div className="relative group">
-                        {/* Glow effect */}
-                        <div className={`absolute -inset-0.5 bg-gradient-to-r ${msg.color} rounded-3xl opacity-0 group-hover:opacity-20 blur transition-all duration-300`}></div>
-
-                        <div className={`relative bg-gradient-to-br from-white to-gray-50 ${msg.position === 'left' ? 'rounded-3xl rounded-tl-sm' : 'rounded-3xl rounded-tr-sm'} p-5 shadow-xl border border-gray-200/50`}>
-                          <div className="flex items-center gap-2 mb-3">
-                            <div className={`w-8 h-8 bg-gradient-to-br ${msg.color} rounded-full shadow-lg ring-2 ring-offset-2 ring-gray-100`}></div>
-                            <span className="font-bold text-gray-900">{msg.name}</span>
-                            <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full ml-auto">{msg.time}</span>
-                          </div>
-                          <p className="text-gray-900 font-medium">{msg.message}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
-
-              {/* Impact card redesignée */}
-              <FadeIn delay={450}>
-                <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-400 via-orange-500 to-pink-500 rounded-3xl opacity-20 group-hover:opacity-30 blur-xl transition-all duration-500"></div>
-
-                  <div className="relative bg-gradient-to-br from-red-50 via-white to-orange-50 rounded-3xl p-10 shadow-2xl border border-red-200/50 text-center">
-                    <div className="text-7xl mb-6 animate-bounce">😰</div>
-                    <div className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
-                      15 messages en 30 minutes
-                    </div>
-                    <div className="text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
-                      Votre production prend du retard. Le stress monte. Vous êtes épuisé avant même d'avoir commencé.
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
+              <VideoTestimonial
+                title="Comment Marie a repris le contrôle"
+                description="Propriétaire de La Mie Dorée à Lyon"
+                beforeText="Avant : 50+ messages par jour, stress permanent"
+                afterText="Après : 0 interruption, production sereine"
+              />
             </div>
           </FadeIn>
 
-          {/* 9h00 - L'erreur */}
-          <FadeIn delay={100} direction="left">
-            <div className="mb-16">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center animate-pulse">
-                  <Phone className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-gray-900">9h00</div>
-                  <div className="text-gray-600">Le téléphone sonne. Votre cœur se serre.</div>
-                </div>
+          {/* Live Stats Section */}
+          <FadeIn delay={400}>
+            <div className="mb-20">
+              <div className="text-center mb-10">
+                <h3 className="text-4xl font-bold text-gray-900 mb-4">
+                  En ce moment même
+                </h3>
+                <p className="text-xl text-gray-600">
+                  Des centaines de boulangers utilisent le système
+                </p>
               </div>
-
-              <FadeIn delay={200}>
-                <div className="bg-red-100 border-2 border-red-300 rounded-3xl p-8 mb-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="text-5xl">☎️</div>
-                    <div>
-                      <div className="font-bold text-xl text-gray-900">Restaurant La Belle Époque</div>
-                      <div className="text-gray-700">Appel entrant...</div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
-                    <p className="text-2xl text-gray-900 font-medium mb-2">
-                      "On avait commandé 40 croissants..."
-                    </p>
-                    <p className="text-xl text-gray-700">
-                      "Vous en avez livré que 30. Il nous en manque 10."
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
-
-              <FadeIn delay={300}>
-                <div className="bg-red-50 rounded-3xl p-8 border-2 border-red-200">
-                  <div className="text-2xl font-bold text-gray-900 mb-4">Le résultat :</div>
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
-                      <div className="text-4xl mb-2">💸</div>
-                      <div className="font-bold text-xl text-gray-900">40€ perdus</div>
-                      <div className="text-gray-600">Vous devez refaire les croissants gratuitement</div>
-                    </div>
-                    <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
-                      <div className="text-4xl mb-2">😞</div>
-                      <div className="font-bold text-xl text-gray-900">1 client mécontent</div>
-                      <div className="text-gray-600">Il perd confiance. Il va peut-être aller ailleurs.</div>
-                    </div>
-                  </div>
-                  <div className="text-center text-gray-700 text-lg">
-                    Qui s'est trompé ? Le client en tapant ? Vous en notant ? <span className="font-bold">Impossible de savoir.</span>
-                  </div>
-                </div>
-              </FadeIn>
+              <LiveStats />
             </div>
           </FadeIn>
 
-          {/* Le bilan qui tue - ULTRA PREMIUM */}
-          <FadeIn delay={100}>
+          {/* Le bilan final - ULTRA PREMIUM */}
+          <FadeIn delay={500}>
             <div className="relative group">
               {/* Mega glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-red-600 via-pink-600 to-red-600 rounded-3xl opacity-75 blur-2xl group-hover:opacity-100 transition-all duration-1000 animate-pulse"></div>
@@ -526,54 +514,60 @@ export default function Home() {
                   </div>
 
                   <div className="grid md:grid-cols-3 gap-6 mb-12">
-                    <FadeIn delay={200}>
-                      <div className="relative group/card">
-                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
-                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
-                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
-                            <AnimatedCounter target={50} />
-                          </div>
-                          <div className="text-xl font-semibold text-red-50">interruptions par jour</div>
+                    <div className="relative group/card">
+                      <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                      <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                        <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                          <AnimatedCounter target={50} />
                         </div>
-                      </div>
-                    </FadeIn>
-
-                    <FadeIn delay={300}>
-                      <div className="relative group/card">
-                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
-                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
-                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
-                            <AnimatedCounter target={3} />h
-                          </div>
-                          <div className="text-xl font-semibold text-red-50">perdues chaque jour</div>
-                        </div>
-                      </div>
-                    </FadeIn>
-
-                    <FadeIn delay={400}>
-                      <div className="relative group/card">
-                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
-                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
-                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
-                            <AnimatedCounter target={780} />h
-                          </div>
-                          <div className="text-xl font-semibold text-red-50">perdues par an</div>
-                        </div>
-                      </div>
-                    </FadeIn>
-                  </div>
-
-                  <FadeIn delay={500}>
-                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
-                      <div className="text-6xl md:text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
-                        = <AnimatedCounter target={32400} prefix="€ " />
-                      </div>
-                      <div className="text-2xl font-bold text-white mb-2">perdus par an</div>
-                      <div className="text-lg text-red-100">
-                        (en comptant votre temps à 25€/h)
+                        <div className="text-xl font-semibold text-red-50">interruptions par jour</div>
                       </div>
                     </div>
-                  </FadeIn>
+
+                    <div className="relative group/card">
+                      <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                      <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                        <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                          <AnimatedCounter target={3} />h
+                        </div>
+                        <div className="text-xl font-semibold text-red-50">perdues chaque jour</div>
+                      </div>
+                    </div>
+
+                    <div className="relative group/card">
+                      <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                      <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                        <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                          <AnimatedCounter target={780} />h
+                        </div>
+                        <div className="text-xl font-semibold text-red-50">perdues par an</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
+                    <div className="text-6xl md:text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                      = <AnimatedCounter target={32400} prefix="€ " />
+                    </div>
+                    <div className="text-2xl font-bold text-white mb-2">perdus par an</div>
+                    <div className="text-lg text-red-100">
+                      (en comptant votre temps à 25€/h)
+                    </div>
+
+                    {/* CTA dans le bilan */}
+                    <div className="mt-8 pt-8 border-t-2 border-white/30">
+                      <p className="text-2xl font-bold text-yellow-300 mb-6">
+                        {getTimeBasedCopy().action}
+                      </p>
+                      <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-8 py-4 bg-white text-red-600 rounded-full text-xl font-bold hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl inline-flex items-center gap-2"
+                      >
+                        Essayer gratuitement 14 jours
+                        <ArrowRight className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
