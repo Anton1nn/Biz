@@ -20,12 +20,19 @@ import {
   Star,
   Mail,
   Phone,
-  MapPin
+  MapPin,
+  Sparkles,
+  Target,
+  Rocket,
+  AlertCircle
 } from 'lucide-react';
 import DemoModal from '@/components/DemoModal';
 import Pricing from '@/components/Pricing';
 import FAQ from '@/components/FAQ';
 import ContactForm from '@/components/ContactForm';
+import ROICalculator from '@/components/ROICalculator';
+import BeforeAfter from '@/components/BeforeAfter';
+import VideoDemo from '@/components/VideoDemo';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 function AnimatedSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -56,14 +63,17 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-orange-100 z-50 shadow-sm">
+      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-lg border-b border-orange-100 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center shadow-md">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-2xl">🥖</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">Baguette & Bureau</span>
+              <div>
+                <span className="text-2xl font-bold text-gray-900">Baguette & Bureau</span>
+                <div className="text-xs text-orange-600 font-semibold">L'automatisation B2B</div>
+              </div>
             </div>
 
             <div className="hidden md:flex items-center gap-8">
@@ -83,192 +93,243 @@ export default function Home() {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg"
+              className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-6 py-3 rounded-xl font-bold transition-all hover:shadow-lg hover:scale-105 flex items-center gap-2"
             >
-              Démo gratuite
+              <Sparkles className="w-4 h-4" />
+              Démo Gratuite
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section - Ultra Marketing */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 left-10 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
-                ✨ La solution pour les boulangers modernes
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 px-5 py-2.5 rounded-full text-sm font-bold mb-8 border-2 border-orange-200 shadow-lg">
+                <Sparkles className="w-4 h-4" />
+                500+ BOULANGERS ONT DÉJÀ CHANGÉ LEUR VIE
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Arrêtez de perdre votre temps avec{' '}
-                <span className="text-orange-600 relative">
-                  WhatsApp
-                  <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-                    <path d="M0,7 Q50,0 100,7" stroke="#f97316" strokeWidth="2" fill="none" />
+
+              <h1 className="text-5xl lg:text-7xl font-black text-gray-900 mb-8 leading-[1.1] tracking-tight">
+                Arrêtez de <span className="text-red-600 relative inline-block">
+                  <span className="relative z-10">perdre 3h par jour</span>
+                  <svg className="absolute bottom-0 left-0 w-full" height="12" viewBox="0 0 100 12" preserveAspectRatio="none">
+                    <path d="M0,10 Q25,0 50,8 T100,10" stroke="#dc2626" strokeWidth="4" fill="none" strokeLinecap="round" />
                   </svg>
-                </span>
+                </span> avec WhatsApp
               </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Automatisez vos commandes B2B pour hôtels et restaurants.
-                Fini les 50 interruptions par jour. Concentrez-vous sur ce que vous faites de mieux :
-                <span className="font-semibold text-gray-900"> faire du bon pain</span>.
+
+              <p className="text-2xl text-gray-700 mb-10 leading-relaxed font-medium">
+                Automatisez <span className="font-bold text-orange-600">100% de vos commandes B2B</span> hôtels & restaurants.
+                <br />
+                <span className="text-gray-600">Zéro interruption. Zéro saisie manuelle. Zéro stress.</span>
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+
+              <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                  className="group bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white px-10 py-5 rounded-xl font-bold text-xl transition-all transform hover:scale-105 shadow-2xl hover:shadow-glow-orange flex items-center justify-center gap-3"
                 >
-                  Essayer gratuitement
-                  <ArrowRight className="w-5 h-5" />
+                  <Rocket className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  Démarrer Maintenant
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
-                  onClick={() => scrollToSection('demo')}
-                  className="bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-md border-2 border-gray-200 hover:border-orange-300"
+                  onClick={() => scrollToSection('video-demo')}
+                  className="bg-white hover:bg-gray-50 text-gray-900 px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl border-2 border-gray-200 hover:border-orange-300 flex items-center justify-center gap-3"
                 >
-                  Voir la démo
+                  ▶️ Voir la Démo (2 min)
                 </button>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-gray-600">
+
+              <div className="flex flex-wrap items-center gap-6 text-gray-600">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Sans engagement</span>
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  <span className="font-semibold">Essai gratuit 14 jours</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Installation en 24h</span>
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  <span className="font-semibold">Sans CB</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Support 7j/7</span>
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  <span className="font-semibold">Installation 24h</span>
                 </div>
               </div>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl p-8 shadow-2xl transform hover:rotate-0 rotate-2 transition-transform">
-                <div className="bg-white rounded-xl p-6 transform -rotate-2">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 p-4 bg-green-50 border-l-4 border-green-500 rounded transform hover:scale-105 transition-transform cursor-pointer">
-                      <CheckCircle className="w-6 h-6 text-green-600" />
+
+            <div className="relative lg:scale-110">
+              <div className="relative">
+                {/* Main card with orders */}
+                <div className="bg-white rounded-3xl p-8 shadow-2xl border-2 border-orange-200 relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center">
+                        <ShoppingCart className="w-6 h-6 text-white" />
+                      </div>
                       <div>
-                        <div className="font-semibold text-gray-900">Commande #1247</div>
-                        <div className="text-sm text-gray-600">Hôtel Le Gourmet - 50 baguettes</div>
+                        <div className="text-sm text-gray-500">Commandes du jour</div>
+                        <div className="text-2xl font-bold text-gray-900">15 en cours</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-4 bg-blue-50 border-l-4 border-blue-500 rounded transform hover:scale-105 transition-transform cursor-pointer">
-                      <CalendarClock className="w-6 h-6 text-blue-600" />
-                      <div>
-                        <div className="font-semibold text-gray-900">Programmée pour 6h30</div>
-                        <div className="text-sm text-gray-600">Restaurant La Table - 30 pains</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-4 bg-orange-50 border-l-4 border-orange-500 rounded transform hover:scale-105 transition-transform cursor-pointer">
-                      <ShoppingCart className="w-6 h-6 text-orange-600" />
-                      <div>
-                        <div className="font-semibold text-gray-900">En préparation</div>
-                        <div className="text-sm text-gray-600">Café du Coin - 20 croissants</div>
-                      </div>
+                    <div className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-bold">
+                      ✓ Tout automatisé
                     </div>
                   </div>
+
+                  <div className="space-y-3">
+                    {[
+                      { name: "Hôtel Le Gourmet", items: "50 baguettes", time: "6h30", color: "green" },
+                      { name: "Restaurant La Table", items: "30 pains", time: "7h00", color: "blue" },
+                      { name: "Café du Coin", items: "20 croissants", time: "7h30", color: "orange" }
+                    ].map((order, idx) => (
+                      <div key={idx} className={`flex items-center gap-3 p-4 bg-${order.color}-50 border-l-4 border-${order.color}-500 rounded-lg transform hover:scale-102 transition-all cursor-pointer`}>
+                        <div className="flex-1">
+                          <div className="font-bold text-gray-900">{order.name}</div>
+                          <div className="text-sm text-gray-600">{order.items}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-semibold text-gray-900">{order.time}</div>
+                          <div className={`text-xs text-${order.color}-600 font-medium`}>✓ Confirmée</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              {/* Floating badges */}
-              <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-3 animate-bounce">
-                <div className="text-2xl font-bold text-orange-600">-3h</div>
-                <div className="text-xs text-gray-600">par jour</div>
+
+                {/* Floating stats */}
+                <div className="absolute -top-6 -right-6 bg-white rounded-2xl shadow-2xl p-5 border-2 border-green-200 animate-bounce z-20">
+                  <div className="text-center">
+                    <div className="text-4xl font-black text-green-600">-3h</div>
+                    <div className="text-xs text-gray-600 font-semibold">économisées</div>
+                    <div className="text-xs text-gray-500">par jour</div>
+                  </div>
+                </div>
+
+                <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-2xl shadow-2xl p-5 z-20">
+                  <div className="text-center">
+                    <div className="text-sm font-semibold mb-1">💰 Économies/an</div>
+                    <div className="text-3xl font-black">32,400€</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Urgency Banner */}
+      <AnimatedSection>
+        <section className="py-6 px-4 bg-gradient-to-r from-red-600 to-orange-600 text-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-6 h-6 animate-pulse" />
+                <div>
+                  <div className="font-bold text-lg">🔥 Offre de lancement : -30% les 3 premiers mois</div>
+                  <div className="text-sm text-red-100">Plus que 7 places disponibles ce mois-ci</div>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-white text-red-600 px-8 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all whitespace-nowrap shadow-xl"
+              >
+                J'en profite maintenant →
+              </button>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
       {/* Trust Indicators */}
       <AnimatedSection>
-        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-y border-gray-200">
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-y-2 border-gray-200">
           <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-gray-600 font-medium">Ils nous font déjà confiance</p>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-orange-600 mb-2">500+</div>
-                <div className="text-gray-600">Boulangeries</div>
+              <div className="transform hover:scale-110 transition-transform">
+                <div className="text-5xl font-black text-orange-600 mb-2">500+</div>
+                <div className="text-gray-700 font-semibold">Boulangeries</div>
+                <div className="text-xs text-gray-500">actives en France</div>
               </div>
-              <div>
-                <div className="text-4xl font-bold text-orange-600 mb-2">10k+</div>
-                <div className="text-gray-600">Commandes/jour</div>
+              <div className="transform hover:scale-110 transition-transform">
+                <div className="text-5xl font-black text-orange-600 mb-2">10k+</div>
+                <div className="text-gray-700 font-semibold">Commandes/jour</div>
+                <div className="text-xs text-gray-500">traitées automatiquement</div>
               </div>
-              <div>
-                <div className="text-4xl font-bold text-orange-600 mb-2">99.9%</div>
-                <div className="text-gray-600">Disponibilité</div>
+              <div className="transform hover:scale-110 transition-transform">
+                <div className="text-5xl font-black text-orange-600 mb-2">3h</div>
+                <div className="text-gray-700 font-semibold">Économisées/jour</div>
+                <div className="text-xs text-gray-500">en moyenne par boulanger</div>
               </div>
-              <div>
-                <div className="text-4xl font-bold text-orange-600 mb-2">4.9/5</div>
-                <div className="text-gray-600 flex items-center justify-center gap-1">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+              <div className="transform hover:scale-110 transition-transform">
+                <div className="flex items-center justify-center gap-1 mb-2">
+                  {[1,2,3,4,5].map((i) => (
+                    <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+                  ))}
                 </div>
+                <div className="text-gray-700 font-semibold">4.9/5 étoiles</div>
+                <div className="text-xs text-gray-500">247 avis vérifiés</div>
               </div>
             </div>
           </div>
         </section>
       </AnimatedSection>
 
-      {/* Problem Section */}
+      {/* Problem Section - Agitation Marketing */}
       <AnimatedSection>
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                La réalité d'un boulanger aujourd'hui
+              <div className="inline-block bg-red-100 text-red-700 px-5 py-2 rounded-full text-sm font-bold mb-6">
+                ⚠️ LE PROBLÈME QUE VOUS VIVEZ CHAQUE JOUR
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Votre journée <span className="text-red-600">avant</span> Baguette & Bureau
               </h2>
-              <p className="text-xl text-gray-600">
-                Une journée rythmée par les interruptions constantes
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Reconnaissez-vous cette situation ? Vous n'êtes pas seul...
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Smartphone className="w-6 h-6 text-red-600" />
+
+            <BeforeAfter />
+
+            <div className="mt-16 bg-red-50 border-2 border-red-300 rounded-2xl p-8 max-w-4xl mx-auto">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  50 interruptions/jour
-                </h3>
-                <p className="text-gray-600">
-                  Votre téléphone ne cesse de sonner. Chaque message WhatsApp vous arrache à votre travail.
-                </p>
-              </div>
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <FileText className="w-6 h-6 text-red-600" />
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    Le coût réel de WhatsApp pour votre boulangerie
+                  </h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 font-bold">•</span>
+                      <span><strong>3 heures perdues par jour</strong> = 780h par an = 97 jours de travail gâchés</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 font-bold">•</span>
+                      <span><strong>32,400€ de manque à gagner par an</strong> (temps valorisé à 25€/h)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 font-bold">•</span>
+                      <span><strong>Stress permanent</strong>, erreurs de commandes, clients mécontents</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600 font-bold">•</span>
+                      <span><strong>Impossible de scaler</strong> votre activité B2B dans ces conditions</span>
+                    </li>
+                  </ul>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Saisie manuelle
-                </h3>
-                <p className="text-gray-600">
-                  Chaque commande doit être rentrée à la main dans votre logiciel de comptabilité.
-                </p>
-              </div>
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Printer className="w-6 h-6 text-red-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Impression répétée
-                </h3>
-                <p className="text-gray-600">
-                  Bon de commande pour le client, ticket pour la cuisine... Toujours au même endroit : l'imprimante.
-                </p>
-              </div>
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Clock className="w-6 h-6 text-red-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  3h perdues/jour
-                </h3>
-                <p className="text-gray-600">
-                  Entre la gestion des messages et la saisie administrative, c'est du temps qui n'est pas à la production.
-                </p>
               </div>
             </div>
           </div>
@@ -277,203 +338,181 @@ export default function Home() {
 
       {/* Solution Section */}
       <AnimatedSection>
-        <section id="solution" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-500 to-amber-600 text-white">
-          <div className="max-w-7xl mx-auto">
+        <section id="solution" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600 via-orange-500 to-amber-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">
-                Baguette & Bureau automatise tout pour vous
+              <div className="inline-block bg-white/20 backdrop-blur-sm text-white px-5 py-2 rounded-full text-sm font-bold mb-6 border border-white/30">
+                ✨ LA SOLUTION QUI CHANGE TOUT
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black mb-6">
+                Automatisez 100% de vos<br />commandes B2B en 24h
               </h2>
-              <p className="text-xl text-orange-100">
-                Une solution complète qui transforme votre manière de gérer les commandes B2B
+              <p className="text-2xl text-orange-100 max-w-3xl mx-auto font-medium">
+                Baguette & Bureau remplace WhatsApp par un système professionnel qui tourne tout seul
               </p>
             </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              {[
+                {
+                  icon: Zap,
+                  title: "1. Vos clients commandent en ligne",
+                  desc: "Interface simple accessible 24/7. Fini WhatsApp, fini les appels, fini les interruptions.",
+                  benefit: "+2h gagnées par jour"
+                },
+                {
+                  icon: FileText,
+                  title: "2. Tout se synchronise automatiquement",
+                  desc: "Comptabilité, bons de commande, facturation : tout est généré et envoyé sans votre intervention.",
+                  benefit: "+1h gagnée par jour"
+                },
+                {
+                  icon: Printer,
+                  title: "3. Production optimisée",
+                  desc: "Bons de préparation imprimés automatiquement en cuisine à l'heure que vous choisissez.",
+                  benefit: "Zéro erreur"
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all hover:scale-105 hover:border-white/40">
+                  <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                    <item.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                  <p className="text-orange-100 mb-6 text-lg">{item.desc}</p>
+                  <div className="inline-block bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                    {item.benefit}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-white text-orange-600 px-12 py-5 rounded-xl font-black text-xl hover:bg-gray-100 transition-all shadow-2xl inline-flex items-center gap-3 hover:scale-105"
+              >
+                <Rocket className="w-6 h-6" />
+                Automatiser mes commandes maintenant
+                <ArrowRight className="w-6 h-6" />
+              </button>
+              <p className="text-orange-100 mt-4">✓ 14 jours d'essai gratuit • Sans CB • Installation en 24h</p>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Video Demo Section */}
+      <AnimatedSection>
+        <section id="video-demo" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <VideoDemo />
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* ROI Calculator */}
+      <AnimatedSection>
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-50">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-orange-100 text-orange-700 px-5 py-2 rounded-full text-sm font-bold mb-6">
+                💰 CALCULEZ VOS ÉCONOMIES
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Combien perdez-vous actuellement ?
+              </h2>
+              <p className="text-xl text-gray-600">
+                Découvrez le coût réel de WhatsApp pour votre boulangerie
+              </p>
+            </div>
+            <ROICalculator />
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Social Proof - Testimonials */}
+      <AnimatedSection>
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block bg-green-100 text-green-700 px-5 py-2 rounded-full text-sm font-bold mb-6">
+                ⭐ ILS ONT TRANSFORMÉ LEUR BUSINESS
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Ce que disent les boulangers qui sont passés à l'action
+              </h2>
+            </div>
+
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all hover:scale-105">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Commandes automatisées
-                </h3>
-                <p className="text-orange-100">
-                  Vos clients commandent en ligne 24/7. Plus besoin de répondre aux messages WhatsApp.
-                </p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all hover:scale-105">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <FileText className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Synchronisation comptable
-                </h3>
-                <p className="text-orange-100">
-                  Les commandes sont automatiquement intégrées à votre logiciel de comptabilité.
-                </p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-all hover:scale-105">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <Printer className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Impression automatique
-                </h3>
-                <p className="text-orange-100">
-                  Bons de commande et tickets cuisine imprimés automatiquement au bon moment.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
+              {[
+                {
+                  name: "Marie Dubois",
+                  bakery: "La Mie Dorée",
+                  city: "Lyon",
+                  quote: "J'étais sceptique au début. Maintenant je me demande comment j'ai pu vivre sans. Mes clients adorent commander en 30 secondes, moi j'ai récupéré 3h par jour que je passe avec ma famille au lieu d'être sur WhatsApp.",
+                  result: "3h15 économisées/jour",
+                  roi: "+18,000€/an"
+                },
+                {
+                  name: "Thomas Martin",
+                  bakery: "Aux Délices du Pain",
+                  city: "Bordeaux",
+                  quote: "Installation ultra-rapide, équipe au top. En 2 jours c'était opérationnel. Mes clients B2B commandent maintenant 25% plus souvent car c'est devenu si simple. ROI atteint en 1 mois.",
+                  result: "+25% commandes B2B",
+                  roi: "ROI en 1 mois"
+                },
+                {
+                  name: "Sophie Laurent",
+                  bakery: "Le Four à Bois",
+                  city: "Marseille",
+                  quote: "Fini les erreurs de commandes, fini les malentendus sur WhatsApp, fini le stress. Tout est clair, tout est automatisé. Je peux enfin me concentrer sur ce que j'aime : faire du bon pain.",
+                  result: "0 erreur depuis 6 mois",
+                  roi: "2,8h/jour économisées"
+                }
+              ].map((testimonial, idx) => (
+                <div key={idx} className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl border-2 border-gray-200 hover:shadow-2xl transition-all hover:scale-105">
+                  <div className="flex gap-1 mb-4">
+                    {[1,2,3,4,5].map((i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-6 italic text-lg leading-relaxed">"{testimonial.quote}"</p>
 
-      {/* Benefits Section */}
-      <AnimatedSection>
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Les bénéfices concrets pour votre boulangerie
-              </h2>
-              <p className="text-xl text-gray-600">
-                Gagnez en productivité, en sérénité et en chiffre d'affaires
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="space-y-6">
-                  <div className="flex gap-4 group">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <Clock className="w-6 h-6 text-green-600" />
+                  <div className="mb-4 flex gap-2">
+                    <div className="flex-1 bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+                      <div className="text-xs text-green-700 font-semibold mb-1">Résultat</div>
+                      <div className="text-sm font-bold text-green-600">{testimonial.result}</div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        Économisez 3h par jour
-                      </h3>
-                      <p className="text-gray-600">
-                        Plus d'interruptions, plus de saisie manuelle. 15h gagnées par semaine pour vous concentrer sur la production.
-                      </p>
+                    <div className="flex-1 bg-orange-50 border border-orange-200 rounded-lg p-3 text-center">
+                      <div className="text-xs text-orange-700 font-semibold mb-1">Impact</div>
+                      <div className="text-sm font-bold text-orange-600">{testimonial.roi}</div>
                     </div>
                   </div>
-                  <div className="flex gap-4 group">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <TrendingUp className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        Augmentez votre CA B2B
-                      </h3>
-                      <p className="text-gray-600">
-                        Commande simplifiée = clients plus satisfaits. Ils commandent plus facilement et plus souvent.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 group">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <Users className="w-6 h-6 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        Fidélisez vos clients pro
-                      </h3>
-                      <p className="text-gray-600">
-                        Interface simple, historique de commandes, favoris : vos clients adorent la facilité d'utilisation.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 group">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <CheckCircle className="w-6 h-6 text-orange-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        Réduisez les erreurs
-                      </h3>
-                      <p className="text-gray-600">
-                        Plus de malentendu sur WhatsApp, plus d'erreur de saisie. Chaque commande est claire et précise.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gradient-to-br from-gray-50 to-orange-50 rounded-2xl p-8 border-2 border-orange-200 shadow-xl">
-                <div className="text-center">
-                  <div className="text-6xl font-bold text-orange-600 mb-2">3h</div>
-                  <div className="text-xl text-gray-900 font-semibold mb-6">économisées par jour</div>
-                  <div className="h-px bg-orange-200 mb-6"></div>
-                  <div className="text-5xl font-bold text-orange-600 mb-2">15h</div>
-                  <div className="text-xl text-gray-900 font-semibold mb-6">gagnées par semaine</div>
-                  <div className="h-px bg-orange-200 mb-6"></div>
-                  <div className="text-5xl font-bold text-orange-600 mb-2">780h</div>
-                  <div className="text-xl text-gray-900 font-semibold">libérées par an</div>
-                  <div className="mt-8 bg-white rounded-lg p-4 border-2 border-orange-300 shadow-md">
-                    <p className="text-sm text-gray-600">
-                      <span className="font-semibold text-gray-900">C'est l'équivalent de 97 jours de travail</span> que vous récupérez pour développer votre activité
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
 
-      {/* How it Works Section */}
-      <AnimatedSection>
-        <section id="demo" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-amber-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Comment ça marche ?
-              </h2>
-              <p className="text-xl text-gray-600">
-                Simple, rapide et efficace
-              </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-lg">
+                      {testimonial.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                      <div className="font-bold text-gray-900">{testimonial.name}</div>
+                      <div className="text-sm text-gray-600">{testimonial.bakery}, {testimonial.city}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center transform hover:scale-105 transition-transform">
-                <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  1
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Votre client commande
-                </h3>
-                <p className="text-gray-600">
-                  Vos clients accèdent à votre catalogue en ligne et passent commande en quelques clics, à toute heure.
-                </p>
-              </div>
-              <div className="text-center transform hover:scale-105 transition-transform">
-                <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  2
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Synchronisation auto
-                </h3>
-                <p className="text-gray-600">
-                  La commande est automatiquement enregistrée dans votre système de comptabilité. Zéro saisie manuelle.
-                </p>
-              </div>
-              <div className="text-center transform hover:scale-105 transition-transform">
-                <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  3
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Impression cuisine
-                </h3>
-                <p className="text-gray-600">
-                  Les bons de préparation sont imprimés automatiquement en cuisine au bon moment.
-                </p>
-              </div>
-              <div className="text-center transform hover:scale-105 transition-transform">
-                <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  4
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Vous produisez
-                </h3>
-                <p className="text-gray-600">
-                  Concentrez-vous sur votre savoir-faire : faire du bon pain. Le reste est automatisé.
-                </p>
-              </div>
+
+            <div className="mt-12 text-center">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-10 py-5 rounded-xl font-bold text-xl transition-all hover:scale-105 shadow-xl inline-flex items-center gap-3"
+              >
+                <Target className="w-6 h-6" />
+                Je veux les mêmes résultats
+              </button>
+              <p className="text-gray-600 mt-4">Rejoignez les 500+ boulangers qui ont déjà transformé leur activité B2B</p>
             </div>
           </div>
         </section>
@@ -481,29 +520,35 @@ export default function Home() {
 
       {/* Features Grid */}
       <AnimatedSection>
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Toutes les fonctionnalités dont vous avez besoin
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Une solution <span className="gradient-text">tout-en-un</span> qui pense à tout
               </h2>
+              <p className="text-xl text-gray-600">
+                Toutes les fonctionnalités dont vous avez besoin, rien de superflu
+              </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+
+            <div className="grid md:grid-cols-3 gap-6">
               {[
-                { icon: MessageSquare, title: "Catalogue en ligne", desc: "Vos produits toujours à jour, avec photos et prix" },
-                { icon: CalendarClock, title: "Commandes programmées", desc: "Vos clients choisissent l'heure de livraison précise" },
-                { icon: FileText, title: "Bons de commande auto", desc: "Générés et envoyés automatiquement par email" },
-                { icon: Printer, title: "Impression automatique", desc: "Tickets cuisine sans aucune intervention manuelle" },
-                { icon: Users, title: "Multi-clients", desc: "Gérez tous vos pros au même endroit facilement" },
-                { icon: TrendingUp, title: "Statistiques", desc: "Suivez vos ventes B2B en temps réel avec graphiques" },
-                { icon: Shield, title: "Sécurité maximale", desc: "Hébergement en France, certifié et conforme RGPD" },
-                { icon: Award, title: "Facile à utiliser", desc: "Interface intuitive, vos clients adorent la simplicité" },
-                { icon: BarChart, title: "Rapports détaillés", desc: "Analyses de vos meilleures ventes et tendances" },
+                { icon: MessageSquare, title: "Catalogue en ligne", desc: "Vos produits toujours à jour, avec photos, descriptions et prix. Modifiable en 2 clics." },
+                { icon: CalendarClock, title: "Commandes programmées", desc: "Vos clients choisissent l'heure de livraison précise. Vous planifiez votre production optimalement." },
+                { icon: FileText, title: "Bons automatiques", desc: "Bon de commande, facture, bon de livraison : tout généré et envoyé automatiquement." },
+                { icon: Printer, title: "Impression auto", desc: "Tickets cuisine imprimés directement dans votre fournil à l'heure définie. Zéro manipulation." },
+                { icon: Users, title: "Multi-clients", desc: "Gérez tous vos pros (hôtels, restaurants, cafés) au même endroit. Vision centralisée." },
+                { icon: TrendingUp, title: "Statistiques live", desc: "Suivez vos ventes B2B en temps réel. Identifiez vos meilleurs clients et produits." },
+                { icon: Shield, title: "Sécurité maximale", desc: "Hébergement en France, certifié, conforme RGPD. Vos données sont protégées." },
+                { icon: Award, title: "Ultra simple", desc: "Interface intuitive. Vos clients commandent en 30 secondes sans formation." },
+                { icon: BarChart, title: "Rapports détaillés", desc: "Analyses de vos ventes, prévisions, tendances. Prenez de meilleures décisions." },
               ].map((feature, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-xl p-6 hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-200 group">
-                  <feature.icon className="w-8 h-8 text-orange-600 mb-4 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.desc}</p>
+                <div key={idx} className="bg-white rounded-2xl p-6 hover:shadow-2xl transition-all hover:-translate-y-2 border-2 border-gray-200 hover:border-orange-300 group">
+                  <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-amber-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <feature.icon className="w-7 h-7 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
                 </div>
               ))}
             </div>
@@ -511,99 +556,31 @@ export default function Home() {
         </section>
       </AnimatedSection>
 
-      {/* Testimonials Section */}
-      <AnimatedSection>
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 to-amber-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Ils ont repris le contrôle de leur temps
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="flex gap-1 mb-4">
-                  {[1,2,3,4,5].map((i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 italic">
-                  "Avant je passais mes journées sur WhatsApp. Maintenant mes clients commandent seuls et je me concentre enfin sur mon métier. Un vrai game-changer !"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">
-                    MD
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">Marie Dubois</div>
-                    <div className="text-sm text-gray-600">La Mie Dorée, Lyon</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="flex gap-1 mb-4">
-                  {[1,2,3,4,5].map((i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 italic">
-                  "L'installation a été hyper rapide. En 2 jours c'était opérationnel. Mes clients B2B adorent, ils commandent même plus qu'avant !"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">
-                    TM
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">Thomas Martin</div>
-                    <div className="text-sm text-gray-600">Aux Délices du Pain, Bordeaux</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="flex gap-1 mb-4">
-                  {[1,2,3,4,5].map((i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 italic">
-                  "Fini les erreurs de commandes et les allers-retours par message. Tout est clair, automatisé. Je gagne facilement 3h par jour. Merci !"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">
-                    SL
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">Sophie Laurent</div>
-                    <div className="text-sm text-gray-600">Le Four à Bois, Marseille</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
-
       {/* Pricing Section */}
       <AnimatedSection>
-        <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Des tarifs adaptés à votre activité
+              <div className="inline-block bg-green-100 text-green-700 px-5 py-2 rounded-full text-sm font-bold mb-6">
+                💰 TARIFS TRANSPARENTS
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Un investissement qui se rembourse seul
               </h2>
-              <p className="text-xl text-gray-600">
-                Choisissez la formule qui correspond à vos besoins
+              <p className="text-xl text-gray-600 mb-4">
+                Économisez jusqu'à 32,400€ par an. Nos tarifs sont ridiculement bas comparés au bénéfice.
               </p>
+              <div className="inline-block bg-yellow-100 border-2 border-yellow-400 text-yellow-900 px-6 py-3 rounded-xl font-bold">
+                🔥 -30% sur les 3 premiers mois • Offre limitée à 7 places
+              </div>
             </div>
             <Pricing />
-            <div className="mt-12 text-center">
-              <p className="text-gray-600 mb-4">
-                💰 Toutes nos formules incluent : installation, formation, support et mises à jour
+            <div className="mt-16 text-center">
+              <p className="text-gray-700 mb-4 text-lg font-medium">
+                💰 <strong>Toutes nos formules incluent :</strong> Installation complète • Formation équipe • Support 7j/7 • Mises à jour gratuites
               </p>
-              <p className="text-sm text-gray-500">
-                Prix HT • Sans engagement • Résiliable à tout moment
+              <p className="text-gray-500">
+                Prix HT • Sans engagement • Résiliable à tout moment • Satisfait ou remboursé 14 jours
               </p>
             </div>
           </div>
@@ -612,92 +589,119 @@ export default function Home() {
 
       {/* FAQ Section */}
       <AnimatedSection>
-        <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-amber-50">
+        <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-amber-50">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Questions fréquentes
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Vos questions, nos réponses
               </h2>
               <p className="text-xl text-gray-600">
-                Tout ce que vous devez savoir sur Baguette & Bureau
+                Tout ce que vous devez savoir avant de démarrer
               </p>
             </div>
             <FAQ />
+
+            <div className="mt-12 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-2xl p-8 text-center">
+              <h3 className="text-2xl font-bold mb-3">Vous avez encore des questions ?</h3>
+              <p className="text-orange-100 mb-6">Notre équipe est disponible 7j/7 pour vous répondre</p>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="bg-white text-orange-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all shadow-xl inline-flex items-center gap-2"
+              >
+                <Phone className="w-5 h-5" />
+                Parler à un expert
+              </button>
+            </div>
           </div>
         </section>
       </AnimatedSection>
 
       {/* Contact Section */}
       <AnimatedSection>
-        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block bg-blue-100 text-blue-700 px-5 py-2 rounded-full text-sm font-bold mb-6">
+                📞 PARLONS DE VOTRE PROJET
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 mb-6">
+                Démarrez votre transformation dès aujourd'hui
+              </h2>
+              <p className="text-xl text-gray-600">
+                Notre équipe vous répond sous 1h en semaine
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-12">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                  Prêt à automatiser votre activité B2B ?
-                </h2>
-                <p className="text-xl text-gray-600 mb-8">
-                  Demandez une démo personnalisée et découvrez comment Baguette & Bureau peut transformer votre quotidien.
+                <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                  Contactez-nous directement
+                </h3>
+                <p className="text-lg text-gray-600 mb-8">
+                  Discutons de votre situation et voyons comment Baguette & Bureau peut transformer votre activité B2B.
                 </p>
 
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-orange-600" />
+                  <div className="flex items-start gap-4 p-4 bg-orange-50 rounded-xl border-2 border-orange-200">
+                    <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 mb-1">Téléphone</div>
-                      <a href="tel:+33123456789" className="text-orange-600 hover:text-orange-700">
+                      <div className="font-bold text-gray-900 mb-1">Téléphone</div>
+                      <a href="tel:+33123456789" className="text-xl font-bold text-orange-600 hover:text-orange-700">
                         01 23 45 67 89
                       </a>
-                      <p className="text-sm text-gray-600">Lun-Ven 9h-18h</p>
+                      <p className="text-sm text-gray-600 mt-1">Lun-Ven 8h-20h • Sam 9h-18h</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-orange-600" />
+                  <div className="flex items-start gap-4 p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                    <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 mb-1">Email</div>
-                      <a href="mailto:contact@baguette-bureau.fr" className="text-orange-600 hover:text-orange-700">
+                      <div className="font-bold text-gray-900 mb-1">Email</div>
+                      <a href="mailto:contact@baguette-bureau.fr" className="text-xl font-bold text-blue-600 hover:text-blue-700 break-all">
                         contact@baguette-bureau.fr
                       </a>
-                      <p className="text-sm text-gray-600">Réponse sous 24h</p>
+                      <p className="text-sm text-gray-600 mt-1">Réponse garantie sous 1h en semaine</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-orange-600" />
+                  <div className="flex items-start gap-4 p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                    <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 mb-1">Adresse</div>
-                      <p className="text-gray-600">
-                        123 Avenue des Champs<br />
+                      <div className="font-bold text-gray-900 mb-1">Adresse</div>
+                      <p className="text-gray-700">
+                        123 Avenue des Champs-Élysées<br />
                         75008 Paris, France
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-green-50 border-l-4 border-green-500 rounded">
+                <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl">
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                     <div>
-                      <p className="font-semibold text-green-900 mb-1">Garantie satisfait ou remboursé</p>
+                      <p className="font-bold text-green-900 mb-2">🎁 Garantie satisfait ou remboursé 14 jours</p>
                       <p className="text-sm text-green-700">
-                        Essayez Baguette & Bureau pendant 14 jours. Pas convaincu ? Nous vous remboursons intégralement.
+                        Testez Baguette & Bureau sans risque. Pas convaincu ? Nous vous remboursons intégralement, sans question.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-gray-50 to-orange-50 rounded-2xl p-8 border-2 border-orange-200 shadow-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                  Demandez votre démo gratuite
+              <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-8 border-2 border-orange-200 shadow-2xl">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Demandez votre démo personnalisée
                 </h3>
+                <p className="text-gray-600 mb-6">
+                  Remplissez ce formulaire et commencez à économiser 3h dès demain
+                </p>
                 <ContactForm />
               </div>
             </div>
@@ -705,46 +709,97 @@ export default function Home() {
         </section>
       </AnimatedSection>
 
-      {/* Final CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600 to-amber-700 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Prêt à reprendre le contrôle de votre temps ?
-          </h2>
-          <p className="text-xl text-orange-100 mb-8">
-            Rejoignez les 500+ boulangers qui ont déjà automatisé leurs commandes B2B
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
-            >
-              Demander une démo
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="bg-orange-800 hover:bg-orange-900 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors border-2 border-white/20"
-            >
-              Nous contacter
-            </button>
+      {/* Final CTA - Super Agressif */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600 via-red-600 to-pink-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="inline-block bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full text-sm font-bold mb-8 border border-white/30 animate-pulse">
+            🔥 DERNIÈRE CHANCE : Plus que 7 places ce mois-ci
           </div>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-orange-100">
+
+          <h2 className="text-4xl lg:text-6xl font-black mb-6 leading-tight">
+            Vous avez 2 choix aujourd'hui
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-12 text-left">
+            <div className="bg-red-900/50 backdrop-blur-sm border-2 border-red-400 rounded-2xl p-8">
+              <div className="text-4xl mb-4">❌</div>
+              <h3 className="text-2xl font-bold mb-4">Continuer comme avant</h3>
+              <ul className="space-y-3 text-red-100">
+                <li>✗ Perdre 3h par jour sur WhatsApp</li>
+                <li>✗ 32,400€ de manque à gagner par an</li>
+                <li>✗ Stress permanent et erreurs</li>
+                <li>✗ Impossible de développer votre B2B</li>
+                <li>✗ Voir vos concurrents prendre de l'avance</li>
+              </ul>
+            </div>
+
+            <div className="bg-green-500/30 backdrop-blur-sm border-2 border-green-300 rounded-2xl p-8 relative">
+              <div className="absolute -top-3 -right-3 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-black rotate-12">
+                CHOIX GAGNANT
+              </div>
+              <div className="text-4xl mb-4">✅</div>
+              <h3 className="text-2xl font-bold mb-4">Automatiser maintenant</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span>Récupérer 3h par jour immédiatement</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span>Économiser 32,400€ par an</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span>Zéro stress, zéro erreur</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span>Scaler votre B2B sereinement</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <span>Prendre de l'avance sur vos concurrents</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <p className="text-2xl font-bold mb-2">
+              La question n'est pas "est-ce que ça va marcher ?"
+            </p>
+            <p className="text-xl text-white/90">
+              La question c'est : "Combien de temps encore allez-vous perdre 3h par jour ?"
+            </p>
+          </div>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="group bg-white text-orange-600 px-12 py-6 rounded-2xl font-black text-2xl hover:bg-gray-100 transition-all shadow-2xl inline-flex items-center gap-4 hover:scale-105 mb-6"
+          >
+            <Rocket className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
+            OUI, je veux économiser 3h dès demain
+            <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
+          </button>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
-              <span>Installation en 24h</span>
+              <span className="font-semibold">Essai gratuit 14 jours</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
-              <span>Sans engagement</span>
+              <span className="font-semibold">Sans CB</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
-              <span>Support 7j/7</span>
+              <span className="font-semibold">Installation 24h</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
-              <span>Satisfait ou remboursé</span>
+              <span className="font-semibold">Satisfait ou remboursé</span>
             </div>
           </div>
         </div>
@@ -756,13 +811,16 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🥖</span>
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center">
+                  <span className="text-2xl">🥖</span>
                 </div>
-                <span className="text-white font-bold">Baguette & Bureau</span>
+                <div>
+                  <span className="text-white font-bold text-lg">Baguette & Bureau</span>
+                  <div className="text-xs text-orange-400">L'automatisation B2B</div>
+                </div>
               </div>
-              <p className="text-sm">
-                La solution d'automatisation pour les boulangers professionnels.
+              <p className="text-sm leading-relaxed">
+                La solution n°1 d'automatisation des commandes B2B pour les boulangers qui veulent récupérer leur temps.
               </p>
               <div className="mt-4 flex gap-3">
                 <div className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center cursor-pointer transition-colors">
@@ -806,7 +864,7 @@ export default function Home() {
           </div>
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
             <p>&copy; 2024 Baguette & Bureau. Tous droits réservés.</p>
-            <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <div className="flex items-center gap-6 mt-4 md:mt-0">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-green-500" />
                 <span>Hébergé en France</span>
@@ -814,6 +872,10 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500" />
                 <span>Conforme RGPD</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400" />
+                <span>4.9/5 étoiles</span>
               </div>
             </div>
           </div>
