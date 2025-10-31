@@ -157,15 +157,15 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero - Accroche émotionnelle avec parallax */}
+      {/* Hero - Accroche émotionnelle avec parallax et animations avancées */}
       <section className="pt-32 pb-20 section-padding overflow-hidden relative">
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-5 transition-all duration-1000"
           style={{ transform: `translateY(${parallaxOffset * 0.5}px)` }}
         >
-          <div className="absolute top-20 left-10 text-9xl">🥖</div>
-          <div className="absolute top-40 right-20 text-9xl">📱</div>
-          <div className="absolute bottom-20 left-1/4 text-9xl">⏰</div>
+          <div className="absolute top-20 left-10 text-9xl animate-pulse">🥖</div>
+          <div className="absolute top-40 right-20 text-9xl animate-bounce">📱</div>
+          <div className="absolute bottom-20 left-1/4 text-9xl animate-pulse">⏰</div>
         </div>
 
         <div className="container-custom relative z-10">
@@ -173,63 +173,72 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-8 tracking-tight leading-none">
                 Il est 6h du matin.<br />
-                <span className="text-gray-400">Votre téléphone sonne déjà.</span>
+                <span className="text-gray-400 animate-pulse">Votre téléphone sonne déjà.</span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-                Chaque jour, vous perdez <span className="font-bold text-gray-900">3 heures</span> à gérer des commandes WhatsApp.<br />
-                <span className="font-semibold text-gray-900">Et si tout ça pouvait être automatisé ?</span>
-              </p>
+              <FadeIn delay={200} direction="up">
+                <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  Chaque jour, vous perdez <span className="font-bold text-red-600 text-3xl animate-pulse">3 heures</span> à gérer des commandes WhatsApp.<br />
+                  <span className="font-semibold text-gray-900">Et si tout ça pouvait être automatisé ?</span>
+                </p>
+              </FadeIn>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-10 py-4 bg-gray-900 text-white rounded-full text-lg font-medium hover:bg-gray-800 transition-all hover:scale-105 flex items-center gap-2 shadow-xl"
-                >
-                  Reprendre le contrôle
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
+              <FadeIn delay={400} direction="up">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="group px-10 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full text-lg font-medium hover:from-gray-800 hover:to-gray-600 transition-all hover:scale-110 flex items-center gap-2 shadow-2xl hover:shadow-3xl transform"
+                  >
+                    Reprendre le contrôle
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                  </button>
+                </div>
+              </FadeIn>
 
-              <p className="text-sm text-gray-500 mt-8">
-                Rejoignez <AnimatedCounter target={547} /> boulangers qui ont automatisé leurs commandes B2B
-              </p>
+              <FadeIn delay={600}>
+                <p className="text-sm text-gray-500 mt-8 flex items-center justify-center gap-2">
+                  <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+                    <Users className="w-4 h-4" />
+                    <AnimatedCounter target={547} /> boulangers nous font confiance
+                  </span>
+                </p>
+              </FadeIn>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Stats impactantes */}
-      <section className="section-padding bg-gray-900 text-white">
+      {/* Stats impactantes avec animations */}
+      <section className="section-padding bg-gray-900 text-white overflow-hidden">
         <div className="container-custom">
           <div className="grid md:grid-cols-4 gap-8 text-center">
-            <FadeIn delay={0}>
-              <div>
-                <div className="text-5xl md:text-6xl font-bold mb-2">
+            <FadeIn delay={0} direction="up">
+              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
+                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                   <AnimatedCounter target={3} />h
                 </div>
                 <div className="text-gray-400 text-lg">économisées par jour</div>
               </div>
             </FadeIn>
-            <FadeIn delay={100}>
-              <div>
-                <div className="text-5xl md:text-6xl font-bold mb-2">
+            <FadeIn delay={100} direction="up">
+              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
+                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                   <AnimatedCounter target={50} />
                 </div>
                 <div className="text-gray-400 text-lg">interruptions évitées</div>
               </div>
             </FadeIn>
-            <FadeIn delay={200}>
-              <div>
-                <div className="text-5xl md:text-6xl font-bold mb-2">
+            <FadeIn delay={200} direction="up">
+              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
+                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   <AnimatedCounter target={780} />h
                 </div>
                 <div className="text-gray-400 text-lg">récupérées par an</div>
               </div>
             </FadeIn>
-            <FadeIn delay={300}>
-              <div>
-                <div className="text-5xl md:text-6xl font-bold mb-2">
+            <FadeIn delay={300} direction="up">
+              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
+                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                   +<AnimatedCounter target={25} />%
                 </div>
                 <div className="text-gray-400 text-lg">de commandes B2B</div>
@@ -239,127 +248,341 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Le problème - Storytelling immersif */}
-      <section className="section-padding bg-white">
-        <div className="container-custom max-w-4xl">
+      {/* Le problème - DESIGN PREMIUM avec messages WhatsApp */}
+      <section className="section-padding bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{animationDelay: '4s'}}></div>
+        </div>
+
+        <div className="container-custom max-w-5xl relative z-10">
           <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-              Reconnaissez-vous cette journée ?
-            </h2>
-            <p className="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">
-              Une journée typique dans la vie d'un boulanger en 2024.
-              <br />Spoiler : elle ne devrait pas ressembler à ça.
-            </p>
+            <div className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Vous reconnaissez ?
+              </h2>
+              <p className="text-2xl md:text-3xl text-gray-600">
+                C'est votre journée. <span className="text-red-600 font-bold">Tous les jours.</span>
+              </p>
+            </div>
           </FadeIn>
 
-          <div className="space-y-12">
-            <FadeIn delay={100}>
-              <div className="bg-red-50 rounded-3xl p-8 md:p-12 border-2 border-red-100">
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0 w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center">
-                    <Clock className="w-8 h-8 text-white" />
+          {/* 6h00 - Premier message avec design premium */}
+          <FadeIn delay={100} direction="left">
+            <div className="mb-20">
+              {/* Time header avec effet glassmorphism */}
+              <div className="flex items-center gap-4 mb-8 bg-white/60 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-gray-200/50">
+                <div className="relative">
+                  <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-2xl animate-pulse">
+                    <Clock className="w-10 h-10 text-white drop-shadow-lg" />
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-2xl font-semibold text-gray-900">6h00 - La première interruption</h3>
-                    </div>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Vous êtes en plein pétrissage, vos mains dans la pâte. Votre téléphone vibre. C'est l'Hôtel Le Gourmet qui passe sa commande par WhatsApp : "Bonjour, pour demain : 20 baguettes, 15 croissants, 10 pains au chocolat, ah et 5 pains de campagne aussi. Vous avez bien reçu ?"
-                    </p>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Vous devez vous laver les mains, attraper votre téléphone, noter la commande sur un bout de papier, confirmer, puis la saisir dans votre logiciel de comptabilité. Ensuite vous devez créer le bon de commande, l'envoyer au client, l'imprimer pour la cuisine.
-                    </p>
-                    <div className="bg-red-600 text-white px-4 py-2 rounded-xl inline-block font-semibold">
-                      ⏱️ Temps perdu : 8 minutes. Et ce n'est que la première.
-                    </div>
-                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-4xl font-bold text-gray-900 mb-1 tracking-tight">6h00 du matin</div>
+                  <div className="text-xl text-gray-600">Vous pétrissez. Les mains dans la pâte.</div>
                 </div>
               </div>
-            </FadeIn>
 
-            <FadeIn delay={200}>
-              <div className="bg-red-50 rounded-3xl p-8 md:p-12 border-2 border-red-100">
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0 w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center">
-                    <MessageSquare className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">7h30 - Le déluge</h3>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Les messages s'enchaînent. Restaurant La Table : "Bonjour, comme d'habitude + 5 baguettes en plus". Café du Coin : "Salut ! Dispo pour 30 croissants demain ?". Brasserie du Port : "Coucou, tu peux me rappeler ce que j'avais pris la dernière fois ?"
-                    </p>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Chaque message nécessite une réponse, une vérification, une saisie. Votre production prend du retard. Votre équipe attend les instructions. Le stress monte.
-                    </p>
-                    <div className="bg-red-600 text-white px-4 py-2 rounded-xl inline-block font-semibold">
-                      📱 15 messages en 30 minutes. Votre concentration est brisée.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
+              {/* Message WhatsApp style iOS premium */}
+              <FadeIn delay={200}>
+                <div className="max-w-lg mb-8 transform hover:scale-105 transition-all duration-300">
+                  <div className="relative group">
+                    {/* Glow effect on hover */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-3xl opacity-0 group-hover:opacity-20 blur transition-all duration-300"></div>
 
-            <FadeIn delay={300}>
-              <div className="bg-red-50 rounded-3xl p-8 md:p-12 border-2 border-red-100">
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0 w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center">
-                    <Phone className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">9h00 - L'erreur qui coûte cher</h3>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Le téléphone sonne. C'est le restaurant La Belle Époque : "On avait commandé 40 croissants, vous en avez livré seulement 30". Vous regardez les messages : effectivement, vous avez mal noté. Ou peut-être que le client s'est trompé en tapant son message. Impossible de savoir.
-                    </p>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                      Vous devez refaire 10 croissants en urgence. Le client est mécontent. Vous perdez de l'argent. Et surtout, vous perdez la confiance.
-                    </p>
-                    <div className="bg-red-600 text-white px-4 py-2 rounded-xl inline-block font-semibold">
-                      💸 40€ de perte + 1 client mécontent
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
+                    <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl rounded-tl-sm p-6 shadow-2xl border border-gray-200/50">
+                      {/* Avatar et header */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-green-100">
+                          H
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-bold text-gray-900 text-lg">Hôtel du Parc</div>
+                          <div className="text-xs text-gray-500 flex items-center gap-1">
+                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                            En ligne
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">6:02</div>
+                      </div>
 
-            <FadeIn delay={400}>
-              <div className="bg-red-50 rounded-3xl p-8 md:p-12 border-2 border-red-100">
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0 w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center">
-                    <X className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">Le pire ? Ce n'est pas exceptionnel.</h3>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                      C'est <span className="font-bold text-red-600">tous les jours</span>. Tous les matins. Toute l'année.
-                      <span className="font-bold"> 50 interruptions par jour.</span> 3 heures perdues par jour. 15 heures par semaine.
-                      <span className="font-bold text-red-600"> 780 heures par an.</span>
-                    </p>
-                    <div className="bg-red-600 text-white rounded-2xl p-6">
-                      <div className="grid md:grid-cols-3 gap-6 text-center">
-                        <div>
-                          <div className="text-4xl font-bold mb-1"><AnimatedCounter target={780} />h</div>
-                          <div className="text-red-100">perdues par an</div>
-                        </div>
-                        <div>
-                          <div className="text-4xl font-bold mb-1"><AnimatedCounter target={97} /></div>
-                          <div className="text-red-100">jours de travail</div>
-                        </div>
-                        <div>
-                          <div className="text-4xl font-bold mb-1"><AnimatedCounter target={32400} prefix="€" /></div>
-                          <div className="text-red-100">de temps perdu (à 25€/h)</div>
-                        </div>
+                      {/* Message content avec meilleure typo */}
+                      <div className="bg-white/80 rounded-2xl p-4 shadow-inner">
+                        <p className="text-lg text-gray-900 leading-relaxed space-y-2">
+                          <span className="block">Bonjour ! Pour demain matin :</span>
+                          <span className="block font-semibold text-gray-900">• 20 baguettes</span>
+                          <span className="block font-semibold text-gray-900">• 15 croissants</span>
+                          <span className="block font-semibold text-gray-900">• 10 pains au chocolat</span>
+                          <span className="block mt-3">Livraison à 7h comme d'hab ?</span>
+                          <span className="block">Merci ! 😊</span>
+                        </p>
+                      </div>
+
+                      {/* Typing indicator subtle */}
+                      <div className="flex gap-1 mt-3 ml-4">
+                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                        <div className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </FadeIn>
+
+              {/* Ce que vous devez faire - design amélioré */}
+              <FadeIn delay={300}>
+                <div className="relative group">
+                  {/* Glow effect */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-400 to-pink-500 rounded-3xl opacity-20 group-hover:opacity-30 blur-xl transition-all duration-500"></div>
+
+                  <div className="relative bg-gradient-to-br from-red-50 via-white to-red-50 rounded-3xl p-10 shadow-2xl border border-red-200/50">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="text-4xl">⏱️</div>
+                      <div className="text-2xl font-bold text-gray-900">Ce que vous devez faire :</div>
+                    </div>
+
+                    <div className="space-y-4">
+                      {[
+                        {text: "Vous laver les mains", emoji: "🧼"},
+                        {text: "Prendre le téléphone", emoji: "📱"},
+                        {text: "Noter sur papier", emoji: "📝"},
+                        {text: "Répondre au client", emoji: "💬"},
+                        {text: "Ouvrir votre ordi", emoji: "💻"},
+                        {text: "Saisir dans le logiciel", emoji: "⌨️"},
+                        {text: "Créer le bon de commande", emoji: "📄"},
+                        {text: "L'envoyer par email", emoji: "📧"},
+                        {text: "L'imprimer", emoji: "🖨️"},
+                        {text: "Retourner pétrir", emoji: "🥖"}
+                      ].map((action, i) => (
+                        <FadeIn key={i} delay={350 + i * 40}>
+                          <div className="flex items-center gap-4 bg-white/80 backdrop-blur rounded-2xl p-4 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                            <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg shrink-0">
+                              {i + 1}
+                            </div>
+                            <span className="text-lg font-medium text-gray-800">{action.text}</span>
+                            <span className="text-2xl ml-auto">{action.emoji}</span>
+                          </div>
+                        </FadeIn>
+                      ))}
+                    </div>
+
+                    {/* Big impact card */}
+                    <div className="mt-8 bg-gradient-to-br from-red-600 to-red-700 text-white p-8 rounded-3xl text-center shadow-2xl transform hover:scale-105 transition-all duration-300">
+                      <div className="text-5xl font-black mb-2 drop-shadow-lg animate-pulse">
+                        8 minutes perdues
+                      </div>
+                      <div className="text-xl text-red-100">Et c'est juste la première commande...</div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </FadeIn>
+
+          {/* 7h30 - Déluge de messages avec design premium */}
+          <FadeIn delay={100} direction="right">
+            <div className="mb-20">
+              {/* Time header */}
+              <div className="flex items-center gap-4 mb-10 bg-white/60 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-gray-200/50">
+                <div className="relative">
+                  <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-2xl">
+                    <MessageSquare className="w-10 h-10 text-white drop-shadow-lg animate-pulse" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                    15
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-4xl font-bold text-gray-900 mb-1 tracking-tight">7h30</div>
+                  <div className="text-xl text-gray-600">Votre téléphone n'arrête plus.</div>
+                </div>
               </div>
-            </FadeIn>
-          </div>
+
+              {/* Cascade de messages redesignée */}
+              <div className="space-y-5 mb-10">
+                {[
+                  {name: "Restaurant La Table", time: "7:12", message: "Coucou ! Comme d'habitude + 5 baguettes 😊", color: "from-blue-400 to-blue-600", position: "left"},
+                  {name: "Café du Coin", time: "7:18", message: "Dispo pour 30 croissants demain ?", color: "from-purple-400 to-purple-600", position: "right"},
+                  {name: "Brasserie du Port", time: "7:24", message: "C'était quoi déjà ma commande habituelle ? 🤔", color: "from-orange-400 to-orange-600", position: "left"},
+                  {name: "Hôtel Belle Vue", time: "7:31", message: "URGENT besoin de 40 viennoiseries en plus !!!", color: "from-red-400 to-red-600", position: "right"}
+                ].map((msg, i) => (
+                  <FadeIn key={i} delay={150 + i * 80}>
+                    <div className={`max-w-md ${msg.position === 'right' ? 'ml-auto' : ''} transform hover:scale-105 transition-all duration-300`}>
+                      <div className="relative group">
+                        {/* Glow effect */}
+                        <div className={`absolute -inset-0.5 bg-gradient-to-r ${msg.color} rounded-3xl opacity-0 group-hover:opacity-20 blur transition-all duration-300`}></div>
+
+                        <div className={`relative bg-gradient-to-br from-white to-gray-50 ${msg.position === 'left' ? 'rounded-3xl rounded-tl-sm' : 'rounded-3xl rounded-tr-sm'} p-5 shadow-xl border border-gray-200/50`}>
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className={`w-8 h-8 bg-gradient-to-br ${msg.color} rounded-full shadow-lg ring-2 ring-offset-2 ring-gray-100`}></div>
+                            <span className="font-bold text-gray-900">{msg.name}</span>
+                            <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full ml-auto">{msg.time}</span>
+                          </div>
+                          <p className="text-gray-900 font-medium">{msg.message}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+
+              {/* Impact card redesignée */}
+              <FadeIn delay={450}>
+                <div className="relative group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-red-400 via-orange-500 to-pink-500 rounded-3xl opacity-20 group-hover:opacity-30 blur-xl transition-all duration-500"></div>
+
+                  <div className="relative bg-gradient-to-br from-red-50 via-white to-orange-50 rounded-3xl p-10 shadow-2xl border border-red-200/50 text-center">
+                    <div className="text-7xl mb-6 animate-bounce">😰</div>
+                    <div className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
+                      15 messages en 30 minutes
+                    </div>
+                    <div className="text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
+                      Votre production prend du retard. Le stress monte. Vous êtes épuisé avant même d'avoir commencé.
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </FadeIn>
+
+          {/* 9h00 - L'erreur */}
+          <FadeIn delay={100} direction="left">
+            <div className="mb-16">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center animate-pulse">
+                  <Phone className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-gray-900">9h00</div>
+                  <div className="text-gray-600">Le téléphone sonne. Votre cœur se serre.</div>
+                </div>
+              </div>
+
+              <FadeIn delay={200}>
+                <div className="bg-red-100 border-2 border-red-300 rounded-3xl p-8 mb-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="text-5xl">☎️</div>
+                    <div>
+                      <div className="font-bold text-xl text-gray-900">Restaurant La Belle Époque</div>
+                      <div className="text-gray-700">Appel entrant...</div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
+                    <p className="text-2xl text-gray-900 font-medium mb-2">
+                      "On avait commandé 40 croissants..."
+                    </p>
+                    <p className="text-xl text-gray-700">
+                      "Vous en avez livré que 30. Il nous en manque 10."
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={300}>
+                <div className="bg-red-50 rounded-3xl p-8 border-2 border-red-200">
+                  <div className="text-2xl font-bold text-gray-900 mb-4">Le résultat :</div>
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
+                      <div className="text-4xl mb-2">💸</div>
+                      <div className="font-bold text-xl text-gray-900">40€ perdus</div>
+                      <div className="text-gray-600">Vous devez refaire les croissants gratuitement</div>
+                    </div>
+                    <div className="bg-white rounded-2xl p-6 border-2 border-red-200">
+                      <div className="text-4xl mb-2">😞</div>
+                      <div className="font-bold text-xl text-gray-900">1 client mécontent</div>
+                      <div className="text-gray-600">Il perd confiance. Il va peut-être aller ailleurs.</div>
+                    </div>
+                  </div>
+                  <div className="text-center text-gray-700 text-lg">
+                    Qui s'est trompé ? Le client en tapant ? Vous en notant ? <span className="font-bold">Impossible de savoir.</span>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </FadeIn>
+
+          {/* Le bilan qui tue - ULTRA PREMIUM */}
+          <FadeIn delay={100}>
+            <div className="relative group">
+              {/* Mega glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-600 via-pink-600 to-red-600 rounded-3xl opacity-75 blur-2xl group-hover:opacity-100 transition-all duration-1000 animate-pulse"></div>
+
+              <div className="relative bg-gradient-to-br from-red-600 via-red-700 to-red-900 rounded-3xl p-16 text-white text-center shadow-2xl overflow-hidden">
+                {/* Animated background pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-0 left-0 w-full h-full" style={{
+                    backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                    backgroundSize: '50px 50px'
+                  }}></div>
+                </div>
+
+                <div className="relative z-10">
+                  <div className="text-8xl mb-8 animate-bounce drop-shadow-2xl">😭</div>
+                  <div className="text-5xl md:text-6xl font-black mb-12 tracking-tight drop-shadow-lg">
+                    Et ça, c'est <span className="text-yellow-300 animate-pulse">TOUS LES JOURS.</span>
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-6 mb-12">
+                    <FadeIn delay={200}>
+                      <div className="relative group/card">
+                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                            <AnimatedCounter target={50} />
+                          </div>
+                          <div className="text-xl font-semibold text-red-50">interruptions par jour</div>
+                        </div>
+                      </div>
+                    </FadeIn>
+
+                    <FadeIn delay={300}>
+                      <div className="relative group/card">
+                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                            <AnimatedCounter target={3} />h
+                          </div>
+                          <div className="text-xl font-semibold text-red-50">perdues chaque jour</div>
+                        </div>
+                      </div>
+                    </FadeIn>
+
+                    <FadeIn delay={400}>
+                      <div className="relative group/card">
+                        <div className="absolute -inset-0.5 bg-white/30 rounded-2xl blur group-hover/card:bg-white/50 transition-all"></div>
+                        <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 hover:scale-110 transition-all duration-300 shadow-2xl">
+                          <div className="text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                            <AnimatedCounter target={780} />h
+                          </div>
+                          <div className="text-xl font-semibold text-red-50">perdues par an</div>
+                        </div>
+                      </div>
+                    </FadeIn>
+                  </div>
+
+                  <FadeIn delay={500}>
+                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
+                      <div className="text-6xl md:text-7xl font-black mb-3 text-yellow-300 drop-shadow-lg">
+                        = <AnimatedCounter target={32400} prefix="€ " />
+                      </div>
+                      <div className="text-2xl font-bold text-white mb-2">perdus par an</div>
+                      <div className="text-lg text-red-100">
+                        (en comptant votre temps à 25€/h)
+                      </div>
+                    </div>
+                  </FadeIn>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* L'impact caché - Agitation */}
-      <section className="section-padding bg-gray-900 text-white">
+      {/* L'impact caché - Agitation avec animations de scale */}
+      <section className="section-padding bg-gray-900 text-white overflow-hidden">
         <div className="container-custom max-w-4xl">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-center">
@@ -376,35 +599,43 @@ export default function Home() {
                 icon: <Heart className="w-8 h-8" />,
                 title: "Le stress permanent",
                 description: "Chaque vibration de téléphone est une interruption. Chaque message est une tâche à gérer. Vous ne pouvez jamais vous concentrer vraiment. Le stress s'accumule, jour après jour.",
-                impact: "Votre santé mentale"
+                impact: "Votre santé mentale",
+                emoji: "😰"
               },
               {
                 icon: <Users className="w-8 h-8" />,
                 title: "Les clients que vous perdez",
                 description: "Un client vous envoie un message à 22h. Vous le voyez le lendemain à 7h. Trop tard, il a commandé ailleurs. Combien de ventes manquées parce que vous n'êtes pas disponible 24/7 ?",
-                impact: "Votre chiffre d'affaires"
+                impact: "Votre chiffre d'affaires",
+                emoji: "💸"
               },
               {
                 icon: <AlertCircle className="w-8 h-8" />,
                 title: "Les erreurs coûteuses",
                 description: "Un message mal lu. Une quantité mal notée. Une commande oubliée. Chaque erreur coûte de l'argent, du temps, et surtout : la confiance de vos clients.",
-                impact: "Votre réputation"
+                impact: "Votre réputation",
+                emoji: "❌"
               },
               {
                 icon: <Target className="w-8 h-8" />,
                 title: "Les opportunités manquées",
                 description: "Pendant que vous gérez des messages WhatsApp, vous ne développez pas de nouvelles recettes. Vous ne prospectez pas de nouveaux clients. Vous ne faites pas grandir votre entreprise.",
-                impact: "Votre croissance"
+                impact: "Votre croissance",
+                emoji: "📉"
               }
             ].map((item, idx) => (
-              <FadeIn key={idx} delay={idx * 100}>
-                <div className="bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white mb-6">
-                    {item.icon}
+              <FadeIn key={idx} delay={idx * 100} direction={idx % 2 === 0 ? 'left' : 'right'}>
+                <div className="bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10 hover:border-white/30 transform hover:scale-105 transition-all duration-300 group">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
+                      {item.icon}
+                    </div>
+                    <div className="text-5xl group-hover:scale-125 transition-transform">{item.emoji}</div>
                   </div>
-                  <h3 className="text-2xl font-semibold mb-3">{item.title}</h3>
+                  <h3 className="text-2xl font-semibold mb-3 group-hover:text-red-400 transition-colors">{item.title}</h3>
                   <p className="text-gray-300 leading-relaxed mb-4">{item.description}</p>
-                  <div className="text-red-400 font-semibold">
+                  <div className="inline-flex items-center gap-2 bg-red-500/20 text-red-400 px-4 py-2 rounded-full font-semibold">
+                    <AlertCircle className="w-4 h-4" />
                     Impact : {item.impact}
                   </div>
                 </div>
@@ -414,21 +645,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* La question qui change tout */}
-      <section className="section-padding bg-white">
+      {/* La question qui change tout avec animation révélation */}
+      <section className="section-padding bg-white overflow-hidden">
         <div className="container-custom max-w-3xl text-center">
           <FadeIn>
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
               Et si vous pouviez<br />
               récupérer ces 3 heures<br />
-              <span className="text-gray-400">dès demain matin ?</span>
+              <span className="text-gray-400 animate-pulse">dès demain matin ?</span>
             </h2>
+          </FadeIn>
+
+          <FadeIn delay={200} direction="up">
             <p className="text-xl text-gray-600 leading-relaxed mb-12">
               Imaginez une matinée où votre téléphone ne sonne pas.<br />
               Où toutes vos commandes B2B arrivent automatiquement.<br />
               Où vous pouvez vous concentrer sur ce que vous aimez : <span className="font-bold text-gray-900">faire du bon pain.</span>
             </p>
-            <div className="bg-green-50 rounded-3xl p-12 border-2 border-green-200">
+          </FadeIn>
+
+          <FadeIn delay={400} direction="up">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-12 border-2 border-green-200 shadow-2xl transform hover:scale-105 transition-all duration-500">
+              <div className="text-6xl mb-6 animate-bounce">✨</div>
               <p className="text-2xl md:text-3xl font-semibold text-gray-900 mb-6">
                 C'est exactement ce que fait Baguette & Bureau.
               </p>
@@ -437,7 +675,7 @@ export default function Home() {
               </p>
               <div className="flex items-center justify-center gap-2 text-gray-500">
                 <ChevronDown className="w-6 h-6 animate-bounce" />
-                <span>Continuez à lire</span>
+                <span className="animate-pulse">Continuez à lire</span>
               </div>
             </div>
           </FadeIn>
