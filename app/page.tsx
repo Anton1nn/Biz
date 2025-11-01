@@ -8,7 +8,7 @@ import TimelineProgress from '@/components/TimelineProgress';
 import LiveCounter from '@/components/LiveCounter';
 import VideoTestimonial from '@/components/VideoTestimonial';
 import LiveStats from '@/components/LiveStats';
-import { useInView, useScrollProgress, useCounter, useParallax } from '@/hooks/useAdvancedAnimations';
+import { useInView, useScrollProgress, useCounter, useParallax, useMagneticEffect, use3DTilt, useScrollDirection } from '@/hooks/useAdvancedAnimations';
 
 // Fonction pour personnaliser le texte selon l'heure
 function getTimeBasedCopy() {
@@ -65,6 +65,91 @@ function FadeIn({ children, delay = 0, direction = 'up' }: {
   );
 }
 
+// Bouton avec effet magnétique premium
+function MagneticButton({ children, onClick, className = '', variant = 'primary' }: {
+  children: React.ReactNode;
+  onClick: () => void;
+  className?: string;
+  variant?: 'primary' | 'secondary';
+}) {
+  const { ref, position } = useMagneticEffect(0.15);
+
+  const variantStyles = {
+    primary: 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white hover:shadow-4xl bg-200% animate-gradient',
+    secondary: 'bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-900'
+  };
+
+  return (
+    <div ref={ref} className="inline-block">
+      <button
+        onClick={onClick}
+        className={`group px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 ease-spring flex items-center gap-2 shadow-2xl hover:scale-105 gpu-accelerated ${variantStyles[variant]} ${className}`}
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+        }}
+      >
+        <span className="relative z-10">{children}</span>
+        <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+      </button>
+    </div>
+  );
+}
+
+// Carte de statistique avec effet 3D
+function StatCard3D({ value, label, gradient, glowColor }: {
+  value: React.ReactNode;
+  label: string;
+  gradient: string;
+  glowColor: string;
+}) {
+  const { ref, tilt } = use3DTilt(8);
+
+  return (
+    <div ref={ref} className="gpu-accelerated">
+      <div
+        className={`glassmorphism-strong rounded-3xl p-8 border border-white/20 transition-all duration-500 hover:border-white/40 ${glowColor} hover-glow`}
+        style={{
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        }}
+      >
+        <div className={`text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-transparent drop-shadow-lg`}>
+          {value}
+        </div>
+        <div className="text-gray-300 text-lg font-medium">{label}</div>
+      </div>
+    </div>
+  );
+}
+
+// Carte d'impact avec effet 3D
+function ImpactCard3D({ item }: { item: any }) {
+  const { ref, tilt } = use3DTilt(5);
+
+  return (
+    <div ref={ref} className="gpu-accelerated h-full">
+      <div
+        className="glassmorphism-strong rounded-3xl p-8 border border-white/10 hover:border-white/30 transition-all duration-500 group h-full hover-glow"
+        style={{
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        }}
+      >
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl flex items-center justify-center text-white group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500 shadow-lg">
+            {item.icon}
+          </div>
+          <div className="text-5xl group-hover:scale-125 transition-transform duration-500">{item.emoji}</div>
+        </div>
+        <h3 className="text-2xl font-semibold mb-3 group-hover:text-red-400 transition-colors duration-300">{item.title}</h3>
+        <p className="text-gray-300 leading-relaxed mb-4">{item.description}</p>
+        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-pink-500/20 text-red-400 px-4 py-2 rounded-full font-semibold border border-red-500/30">
+          <AlertCircle className="w-4 h-4" />
+          Impact : {item.impact}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Compteur animé
 function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {
   const { ref, count } = useCounter(target);
@@ -80,9 +165,9 @@ function ScrollProgress() {
   const progress = useScrollProgress();
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100 z-50">
+    <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-100 to-gray-50 z-50">
       <div
-        className="h-full bg-gradient-to-r from-gray-900 to-gray-700 transition-all duration-300"
+        className="h-full bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 transition-all duration-300 shadow-glow gpu-accelerated"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -92,34 +177,35 @@ function ScrollProgress() {
 // Sticky CTA
 function StickyCTA({ onClick }: { onClick: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
+  const scrollDirection = useScrollDirection();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 800);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-40 transition-transform duration-500 ${
-        isVisible ? 'translate-y-0' : 'translate-y-full'
+      className={`fixed bottom-0 left-0 right-0 glassmorphism-strong border-t border-gray-200/50 shadow-4xl z-40 transition-all duration-500 backdrop-blur-custom ${
+        isVisible && scrollDirection === 'down' ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
       <div className="container-custom py-4">
         <div className="flex items-center justify-between gap-4">
           <div className="hidden md:block">
-            <div className="font-semibold text-gray-900">Prêt à reprendre le contrôle ?</div>
+            <div className="font-semibold text-gray-900 text-gradient-animated">Prêt à reprendre le contrôle ?</div>
             <div className="text-sm text-gray-600">14 jours gratuits, sans carte bancaire</div>
           </div>
           <button
             onClick={onClick}
-            className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-all hover:scale-105 flex items-center gap-2 shadow-lg"
+            className="px-8 py-3 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white rounded-full font-medium transition-all duration-500 hover:scale-105 flex items-center gap-2 shadow-2xl hover:shadow-4xl gpu-accelerated bg-200% animate-gradient group"
           >
             Commencer gratuitement
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
           </button>
         </div>
       </div>
@@ -169,17 +255,17 @@ export default function Home() {
       <StickyCTA onClick={() => setIsModalOpen(true)} />
 
       {/* Navigation épurée */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 z-40 mt-1">
+      <nav className="fixed top-0 w-full glassmorphism-strong border-b border-gray-200/50 z-40 mt-1 backdrop-blur-custom">
         <div className="container-custom">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🥖</span>
-              <span className="text-lg font-semibold text-gray-900">Baguette & Bureau</span>
+            <div className="flex items-center gap-2 group cursor-pointer">
+              <span className="text-2xl transition-transform duration-300 group-hover:rotate-12">🥖</span>
+              <span className="text-lg font-semibold text-gray-900 transition-all duration-300 group-hover:text-gray-700">Baguette & Bureau</span>
             </div>
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all hover:scale-105"
+              className="px-6 py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-full text-sm font-medium hover:shadow-xl transition-all duration-300 hover:scale-105 gpu-accelerated bg-200% animate-gradient"
             >
               Essayer gratuitement
             </button>
@@ -189,45 +275,49 @@ export default function Home() {
 
       {/* Hero - Accroche émotionnelle avec parallax et animations avancées */}
       <section className="pt-32 pb-20 section-padding overflow-hidden relative">
+        {/* Animated Mesh Gradient Background */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 animate-mesh-gradient"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-200 to-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-pink-200 to-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float-slow"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float" style={{animationDelay: '1s'}}></div>
+        </div>
+
         <div
           className="absolute inset-0 opacity-5 transition-all duration-1000"
           style={{ transform: `translateY(${parallaxOffset * 0.5}px)` }}
         >
-          <div className="absolute top-20 left-10 text-9xl animate-pulse">🥖</div>
-          <div className="absolute top-40 right-20 text-9xl animate-bounce">📱</div>
-          <div className="absolute bottom-20 left-1/4 text-9xl animate-pulse">⏰</div>
+          <div className="absolute top-20 left-10 text-9xl animate-float">🥖</div>
+          <div className="absolute top-40 right-20 text-9xl animate-float-slow">📱</div>
+          <div className="absolute bottom-20 left-1/4 text-9xl animate-float" style={{animationDelay: '0.5s'}}>⏰</div>
         </div>
 
         <div className="container-custom relative z-10">
           <FadeIn>
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-8 tracking-tight leading-none">
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-8 tracking-tight leading-none gpu-accelerated">
                 Il est 6h du matin.<br />
-                <span className="text-gray-400 animate-pulse">Votre téléphone sonne déjà.</span>
+                <span className="text-gray-400 bg-clip-text text-transparent bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 bg-200% animate-gradient">Votre téléphone sonne déjà.</span>
               </h1>
 
               <FadeIn delay={200} direction="up">
                 <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-                  Chaque jour, vous perdez <span className="font-bold text-red-600 text-3xl animate-pulse">3 heures</span> à gérer des commandes WhatsApp.<br />
+                  Chaque jour, vous perdez <span className="font-bold text-red-600 text-3xl px-3 py-1 bg-red-50 rounded-lg animate-glow-pulse glow-red">3 heures</span> à gérer des commandes WhatsApp.<br />
                   <span className="font-semibold text-gray-900">Et si tout ça pouvait être automatisé ?</span>
                 </p>
               </FadeIn>
 
               <FadeIn delay={400} direction="up">
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="group px-10 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full text-lg font-medium hover:from-gray-800 hover:to-gray-600 transition-all hover:scale-110 flex items-center gap-2 shadow-2xl hover:shadow-3xl transform"
-                  >
+                  <MagneticButton onClick={() => setIsModalOpen(true)}>
                     Reprendre le contrôle
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                  </button>
+                  </MagneticButton>
                 </div>
               </FadeIn>
 
               <FadeIn delay={600}>
                 <p className="text-sm text-gray-500 mt-8 flex items-center justify-center gap-2">
-                  <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-medium">
+                  <span className="inline-flex items-center gap-2 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 px-4 py-2 rounded-full font-medium border border-green-200 hover-lift gpu-accelerated">
                     <Users className="w-4 h-4" />
                     <AnimatedCounter target={547} /> boulangers nous font confiance
                   </span>
@@ -239,40 +329,44 @@ export default function Home() {
       </section>
 
       {/* Stats impactantes avec animations */}
-      <section className="section-padding bg-gray-900 text-white overflow-hidden">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+      <section className="section-padding mesh-gradient-dark text-white overflow-hidden relative">
+        {/* Animated glow orbs */}
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full filter blur-3xl animate-float"></div>
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full filter blur-3xl animate-float-slow"></div>
+
+        <div className="container-custom relative z-10">
+          <div className="grid md:grid-cols-4 gap-8 text-center perspective-container">
             <FadeIn delay={0} direction="up">
-              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
-                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  <AnimatedCounter target={3} />h
-                </div>
-                <div className="text-gray-400 text-lg">économisées par jour</div>
-              </div>
+              <StatCard3D
+                value={<><AnimatedCounter target={3} />h</>}
+                label="économisées par jour"
+                gradient="from-green-400 to-emerald-400"
+                glowColor="glow-green"
+              />
             </FadeIn>
             <FadeIn delay={100} direction="up">
-              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
-                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  <AnimatedCounter target={50} />
-                </div>
-                <div className="text-gray-400 text-lg">interruptions évitées</div>
-              </div>
+              <StatCard3D
+                value={<AnimatedCounter target={50} />}
+                label="interruptions évitées"
+                gradient="from-blue-400 to-cyan-400"
+                glowColor="glow-blue"
+              />
             </FadeIn>
             <FadeIn delay={200} direction="up">
-              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
-                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  <AnimatedCounter target={780} />h
-                </div>
-                <div className="text-gray-400 text-lg">récupérées par an</div>
-              </div>
+              <StatCard3D
+                value={<><AnimatedCounter target={780} />h</>}
+                label="récupérées par an"
+                gradient="from-purple-400 to-pink-400"
+                glowColor="glow-purple"
+              />
             </FadeIn>
             <FadeIn delay={300} direction="up">
-              <div className="transform hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10">
-                <div className="text-5xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                  +<AnimatedCounter target={25} />%
-                </div>
-                <div className="text-gray-400 text-lg">de commandes B2B</div>
-              </div>
+              <StatCard3D
+                value={<>+<AnimatedCounter target={25} />%</>}
+                label="de commandes B2B"
+                gradient="from-yellow-400 to-orange-400"
+                glowColor="glow-red"
+              />
             </FadeIn>
           </div>
         </div>
@@ -556,15 +650,15 @@ export default function Home() {
 
                     {/* CTA dans le bilan */}
                     <div className="mt-8 pt-8 border-t-2 border-white/30">
-                      <p className="text-2xl font-bold text-yellow-300 mb-6">
+                      <p className="text-2xl font-bold bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 bg-clip-text text-transparent animate-gradient bg-200% mb-6 drop-shadow-lg">
                         {getTimeBasedCopy().action}
                       </p>
                       <button
                         onClick={() => setIsModalOpen(true)}
-                        className="px-8 py-4 bg-white text-red-600 rounded-full text-xl font-bold hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl inline-flex items-center gap-2"
+                        className="px-8 py-4 bg-gradient-to-r from-white via-gray-50 to-white text-red-600 rounded-full text-xl font-bold hover:shadow-4xl transition-all duration-500 hover:scale-110 shadow-2xl inline-flex items-center gap-2 group gpu-accelerated bg-200% animate-gradient"
                       >
                         Essayer gratuitement 14 jours
-                        <ArrowRight className="w-6 h-6" />
+                        <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
                       </button>
                     </div>
                   </div>
@@ -619,20 +713,7 @@ export default function Home() {
               }
             ].map((item, idx) => (
               <FadeIn key={idx} delay={idx * 100} direction={idx % 2 === 0 ? 'left' : 'right'}>
-                <div className="bg-white/5 backdrop-blur rounded-3xl p-8 border border-white/10 hover:border-white/30 transform hover:scale-105 transition-all duration-300 group">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
-                      {item.icon}
-                    </div>
-                    <div className="text-5xl group-hover:scale-125 transition-transform">{item.emoji}</div>
-                  </div>
-                  <h3 className="text-2xl font-semibold mb-3 group-hover:text-red-400 transition-colors">{item.title}</h3>
-                  <p className="text-gray-300 leading-relaxed mb-4">{item.description}</p>
-                  <div className="inline-flex items-center gap-2 bg-red-500/20 text-red-400 px-4 py-2 rounded-full font-semibold">
-                    <AlertCircle className="w-4 h-4" />
-                    Impact : {item.impact}
-                  </div>
-                </div>
+                <ImpactCard3D item={item} />
               </FadeIn>
             ))}
           </div>
@@ -1232,13 +1313,14 @@ export default function Home() {
                 </ul>
               </div>
 
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="w-full px-10 py-6 bg-gray-900 text-white rounded-full text-xl font-bold hover:bg-gray-800 transition-all hover:scale-105 shadow-2xl mb-6 flex items-center justify-center gap-3"
-              >
-                Commencer l'essai gratuit de 14 jours
-                <ArrowRight className="w-6 h-6" />
-              </button>
+              <div className="w-full">
+                <MagneticButton
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full px-10 py-6 text-xl justify-center"
+                >
+                  Commencer l'essai gratuit de 14 jours
+                </MagneticButton>
+              </div>
 
               <p className="text-sm text-gray-600 mb-6">
                 14 jours d'essai gratuit · Sans carte bancaire · Sans engagement<br />
@@ -1433,13 +1515,11 @@ export default function Home() {
                 </div>
               </div>
 
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="px-16 py-6 bg-gray-900 text-white rounded-full text-2xl font-bold hover:bg-gray-800 transition-all hover:scale-105 inline-flex items-center gap-3 shadow-2xl mb-6"
-              >
-                Commencer mon essai gratuit maintenant
-                <ArrowRight className="w-7 h-7" />
-              </button>
+              <div className="inline-block">
+                <MagneticButton onClick={() => setIsModalOpen(true)} className="px-16 py-6 text-2xl">
+                  Commencer mon essai gratuit maintenant
+                </MagneticButton>
+              </div>
 
               <div className="space-y-2 text-sm text-gray-600">
                 <div>✅ 14 jours d'essai gratuit</div>
